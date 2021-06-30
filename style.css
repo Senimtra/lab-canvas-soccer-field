@@ -1,0 +1,13 @@
+/*
+###############################
+## LAB - Canvas Soccer Field ##
+############################### */
+
+body {
+   background-color: dimgrey;
+}
+
+img {
+   width: 824px;
+   margin-top: 5em;
+}
