@@ -6,15 +6,20 @@
 const canvas = document.querySelector('canvas');
 const context = canvas.getContext('2d');
 
-widthField = document.querySelector('canvas').width;
-heightField = document.querySelector('canvas').height;
+const widthField = document.querySelector('canvas').width;
+const heightField = document.querySelector('canvas').height;
 
 // ### Field size 80m / 120 m ###
-meter = ((widthField / 14) * 12) / 120;
+const meter = ((widthField / 14) * 12) / 120;
 
 // ### Declaring center ###
-middleX = widthField / 2;
-middleY = heightField / 2;
+const middleX = widthField / 2;
+const middleY = heightField / 2;
+
+// ### Declaring net mesh size ###
+const meshSizeX = 5.9;
+const meshSizeY = 4.95;
+let xOffset = -60 * meter;
 
 // ### Colors ###
 // white-ish = #EAF0E1
@@ -30,7 +35,6 @@ drawSoccerField = () => {
          context.fillStyle = '#408508';
       }
       context.fillRect(i * (widthField / 14), 0, widthField / 14, heightField);
-      console.log('hello');
    }
 
    // draw outer lines
@@ -92,6 +96,20 @@ drawSoccerField = () => {
    context.strokeRect(middleX - 60 * meter, middleY - 10 * meter, 6.5 * meter, 20 * meter);
    // draw right goal area
    context.strokeRect(middleX + 53.5 * meter, middleY - 10 * meter, 6.5 * meter, 20 * meter);
+
+   // draw goals (mirrored version)
+   for (leftRight = 0; leftRight < 2; leftRight++) {
+      leftRight === 0 ? (xOffset -= 4.2 * meter) : (xOffset += 124.2 * meter);
+      context.lineWidth = 3;
+      context.strokeRect(middleX + xOffset, middleY - 6 * meter, 4.2 * meter, 12 * meter);
+      context.lineWidth = 0.5;
+      for (i = 1; i < 4; i++) {
+         context.strokeRect(middleX + xOffset + i * meshSizeX, middleY - 6 * meter, 1, 12 * meter);
+      }
+      for (j = 1; j < 14; j++) {
+         context.strokeRect(middleX + xOffset, middleY - 6 * meter + j * meshSizeY, 4.3 * meter, 1);
+      }
+   }
 };
 
 drawSoccerField();
